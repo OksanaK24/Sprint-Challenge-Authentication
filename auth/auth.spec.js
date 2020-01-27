@@ -34,6 +34,14 @@ describe("just testing everything", () =>{
         expect(res.body.username).toMatch(/oleksandra/i)
     })
 
+    test("create new user with identical username", async () => {
+        const res = await supertest(server)
+            .post("/api/auth/register")
+            .send({ username: "Oksana", password: "QwErTy1" })
+        console.log(res.body)
+        expect(res.status).toBe(500)
+    })
+
     test("login", async () => {
         // let hash = bcrypt.hash("GuessWhat?", 14)
         const res = await supertest(server)
@@ -50,6 +58,15 @@ describe("just testing everything", () =>{
         expect(res.status).toBe(200)
         expect(res.type).toBe("application/json")
         expect(res.body.message).toBe("Welcome Oksana!")
+    })
+
+    test("login", async () => {
+        const res = await supertest(server)
+            .post("/api/auth/login")
+            .send({ username: "Oksana", password: "GuessWhat!"})
+        console.log(res.body)
+        expect(res.status).toBe(401)
+        expect(res.body.message).toBe("Invalid Credentials")
     })
 
 })
