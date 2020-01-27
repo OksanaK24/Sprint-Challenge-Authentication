@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken")
 
 const secrets = require("../config/secrets")
 const usersModel = require("./auth-model")
-const restricted = require("./authenticate-middleware")
 
 function generateToken(user){
 
